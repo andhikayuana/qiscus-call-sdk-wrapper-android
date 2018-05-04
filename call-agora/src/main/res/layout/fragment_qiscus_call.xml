@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.qiscus.sdk.call.agora.ui.view.QiscusVideoLayout
+    <com.qiscus.sdk.call.agora.ui.widget.QiscusVideoLayout
         android:id="@+id/local_video_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -12,9 +12,9 @@
             android:id="@+id/local_video_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </com.qiscus.sdk.call.agora.ui.view.QiscusVideoLayout>
+    </com.qiscus.sdk.call.agora.ui.widget.QiscusVideoLayout>
 
-    <com.qiscus.sdk.call.agora.ui.view.QiscusVideoLayout
+    <com.qiscus.sdk.call.agora.ui.widget.QiscusVideoLayout
         android:id="@+id/remote_video_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -23,7 +23,7 @@
             android:id="@+id/remote_video_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </com.qiscus.sdk.call.agora.ui.view.QiscusVideoLayout>
+    </com.qiscus.sdk.call.agora.ui.widget.QiscusVideoLayout>
 
     <FrameLayout
         android:id="@+id/call_fragment_container"

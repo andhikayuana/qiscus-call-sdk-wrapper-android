@@ -1,4 +1,4 @@
-package com.qiscus.sdk.call.agora.ui.view;
+package com.qiscus.sdk.call.agora.ui.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
