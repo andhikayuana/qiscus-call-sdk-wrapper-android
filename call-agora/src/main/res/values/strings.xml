@@ -1,3 +1,10 @@
 <resources>
-
+    <string name="qiscus_call_loading">loading..</string>
+    <string name="qiscus_call_error_no_internet">No internet connection</string>
+    <string name="qiscus_call_time_zero">00:00</string>
+    <string name="qiscus_call_on_going_call_notif">You have an ongoing call</string>
+    <string name="qiscus_call_calling_state">Calling</string>
+    <string name="qiscus_call_incoming_state">Incoming Call</string>
+    <string name="qiscus_call_ringing_state">Ringing</string>
+    <string name="qiscus_call_connecting_state">Connecting</string>
 </resources>
