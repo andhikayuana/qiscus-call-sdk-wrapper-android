@@ -61,6 +61,7 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    callAccepted = true;
                     callConnected = true;
                     initCallFragment();
                 }
