@@ -10,7 +10,7 @@
         android:scaleType="centerCrop"
         android:visibility="gone" />
 
-    <com.qiscus.sdk.ui.view.QiscusCircularImageView
+    <com.qiscus.sdk.call.agora.ui.widget.QiscusCircularImageView
         android:id="@+id/caller_avatar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

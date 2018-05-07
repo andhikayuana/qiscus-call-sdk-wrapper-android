@@ -19,7 +19,6 @@ import com.qiscus.nirmana.Nirmana;
 import com.qiscus.sdk.call.agora.QiscusRtc;
 import com.qiscus.sdk.call.agora.R;
 import com.qiscus.sdk.call.agora.data.model.Call;
-import com.qiscus.sdk.ui.view.QiscusCircularImageView;
 
 import static com.qiscus.sdk.call.agora.data.config.Constants.CALL_DATA;
 
@@ -39,7 +38,7 @@ public abstract class CallFragment extends Fragment {
     private TextView tvCallerName;
     private ImageView btnEndCall, btnMic, btnSpeaker, backgroundImage;
     private View background;
-    private QiscusCircularImageView calleeAvatar;
+    private ImageView calleeAvatar;
     private Chronometer callDuration;
     private boolean speakerOn = true;
     private boolean micOn = true;

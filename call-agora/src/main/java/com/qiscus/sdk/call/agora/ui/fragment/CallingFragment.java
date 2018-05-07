@@ -14,7 +14,6 @@ import com.qiscus.sdk.call.agora.QiscusRtc;
 import com.qiscus.sdk.call.agora.R;
 import com.qiscus.sdk.call.agora.data.model.Call;
 import com.qiscus.sdk.call.agora.util.RingManager;
-import com.qiscus.sdk.ui.view.QiscusCircularImageView;
 
 import static com.qiscus.sdk.call.agora.data.config.Constants.CALL_DATA;
 
@@ -28,7 +27,7 @@ public abstract class CallingFragment extends Fragment {
     private OnCallingListener onCallingListener;
     private RingManager ringManager;
     private Call callData;
-    private QiscusCircularImageView calleeAvatar;
+    private ImageView calleeAvatar;
     private TextView tvCallerName, tvCallState;
 
     public static CallingFragment newInstance(Call callData) {
