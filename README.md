@@ -14,10 +14,6 @@ allprojects {
     maven { url  "https://dl.bintray.com/qiscustech/maven" }
     maven {
         url "https://artifactory.qiscus.com/artifactory/qiscus-library-open-source"
-        credentials {
-            username "USERNAME_PLACEHOLDER"
-            password "PASSWORD_PLACEHOLDER"
-        }
     }
   }
 }
@@ -65,6 +61,7 @@ QiscusRtc.register(username, displayName, avatarUrl);
 ```
 
 Start call object:
+
 * roomId: String
 * callAs: Enum QiscusRtc.CallAs.CALLER / QiscusRtc.CallAs.CALLEE
 * callType: Enum QiscusRtc.CallType.VOICE / QiscusRtc.CallType.VIDEO
