@@ -61,7 +61,7 @@ Parameters:
 * avatarUrl: String
 
 ```java
-QiscusRTC.register(username, displayName, avatarUrl);
+QiscusRtc.register(username, displayName, avatarUrl);
 ```
 
 Start call object:
@@ -79,9 +79,9 @@ Start call object:
 
 ```java
 QiscusRtc.buildCallWith(roomId)
-        .setCallAs(QiscusRTC.CallAs.CALLER)
-        .setCallType(QiscusRTC.CallType.VOICE)
-        .setCallerUsername(QiscusRTC.getUser())
+        .setCallAs(QiscusRtc.CallAs.CALLER)
+        .setCallType(QiscusRtc.CallType.VOICE)
+        .setCallerUsername(QiscusRtc.getUser())
         .setCalleeUsername(calleeUsername)
         .setCalleeDisplayName(calleeDisplayName)
         .setCalleeDisplayAvatar(calleeAvatarUrl)
@@ -90,10 +90,10 @@ QiscusRtc.buildCallWith(roomId)
 #### Start video call
 
 ```java
-QiscusRTC.buildCallWith(roomId)
-        .setCallAs(QiscusRTC.CallAs.CALLER)
-        .setCallType(QiscusRTC.CallType.VIDEO)
-        .setCallerUsername(QiscusRTC.getUser())
+QiscusRtc.buildCallWith(roomId)
+        .setCallAs(QiscusRtc.CallAs.CALLER)
+        .setCallType(QiscusRtc.CallType.VIDEO)
+        .setCallerUsername(QiscusRtc.getUser())
         .setCalleeUsername(calleeUsername)
         .setCalleeDisplayName(calleeDisplayName)
         .setCalleeDisplayAvatar(calleeAvatarUrl)
@@ -102,10 +102,10 @@ QiscusRTC.buildCallWith(roomId)
 
 ### Custom your call
 
-You can custom your call notification, icon and callback button action with ```QiscusRTC.getCallConfig()```
+You can custom your call notification, icon and callback button action with ```QiscusRtc.getCallConfig()```
 
 ```java
-QiscusRTC.getCallConfig()
+QiscusRtc.getCallConfig()
         .setBackgroundDrawable(R.drawable.bg_call)
         .setOngoingNotificationEnable(true)
         .setLargeOngoingNotifIcon(R.drawable.ic_call_white_24dp);
