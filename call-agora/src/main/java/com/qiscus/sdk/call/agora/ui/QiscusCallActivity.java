@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -60,6 +61,7 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    callConnected = true;
                     initCallFragment();
                 }
             });
@@ -104,6 +106,9 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
     private PowerManager.WakeLock wakeLock;
     private RingManager ringManager;
     private int field = 0x00000020;
+
+    private boolean callAccepted;
+    private boolean callConnected;
 
     public static Intent generateIntent(Context context, Call callData) {
         Intent intent = new Intent(context, QiscusCallActivity.class);
@@ -157,25 +162,25 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
     }
 
     private void autoDisconnect() {
-        /*new Handler().postDelayed(new Runnable() {
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (!QiscusRtc.Call.getInstance().getCallAccepted()) {
+                if (!callAccepted) {
                     disconnect();
                 }
             }
-        }, 30000);*/
+        }, 30000);
     }
 
     private void autoDisconnect2() {
-        /*new Handler().postDelayed(new Runnable() {
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (!QiscusRtc.Call.getInstance().getCallConnected()) {
+                if (!callConnected) {
                     disconnect();
                 }
             }
-        }, 15000);*/
+        }, 15000);
     }
 
     @Override
@@ -345,10 +350,10 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
     // Calling Fragment Listener
     @Override
     public void onAcceptPressed() {
-        //QiscusRtc.Call.getInstance().setCallAccepted(true);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                callAccepted = true;
                 joinChannel();
                 autoDisconnect2();
                 callingFragment.setTvCallState("Connecting");
@@ -443,8 +448,9 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
 
     @Override
     public void onEndCall(long callDurationMillis) {
-        if (QiscusRtc.getCallConfig().getOnEndCallClickListener() != null) {
-            QiscusRtc.getCallConfig().getOnEndCallClickListener().onClick(callData, callDurationMillis);
+        CallConfig.CallButtonListener.OnEndCallClickListener listener = QiscusRtc.getCallConfig().getOnEndCallClickListener();
+        if (listener != null) {
+            listener.onClick(callData, callDurationMillis);
         }
 
         disconnect();
