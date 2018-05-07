@@ -13,7 +13,7 @@ allprojects {
   repositories {
     maven { url  "https://dl.bintray.com/qiscustech/maven" }
     maven {
-        url "https://artifactory.qiscus.com/artifactory/qiscus-library"
+        url "https://artifactory.qiscus.com/artifactory/qiscus-library-open-source"
         credentials {
             username "USERNAME_PLACEHOLDER"
             password "PASSWORD_PLACEHOLDER"
