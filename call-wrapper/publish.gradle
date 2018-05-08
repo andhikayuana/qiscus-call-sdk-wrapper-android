@@ -29,14 +29,19 @@ publishing {
         }
     }
 }
+
+Properties properties = new Properties()
+InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream()
+properties.load( inputStream )
+
+
 artifactory {
     contextUrl = 'https://artifactory.qiscus.com/artifactory'
     publish {
         repository {
-            repoKey = artifactory_repokey
-
-            username = artifactory_username
-            password = artifactory_password
+            repoKey = properties.getProperty('artifactory_repokey')
+            username = properties.getProperty('artifactory_username')
+            password = properties.getProperty('artifactory_password')
         }
         defaults {
             publications('aar')
