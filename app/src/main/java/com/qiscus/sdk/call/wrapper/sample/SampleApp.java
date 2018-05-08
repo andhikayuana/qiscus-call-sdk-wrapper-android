@@ -14,6 +14,6 @@ public class SampleApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        QiscusRtc.init(this, "7fd46cd9cfab466099a936ec5ef23298");
+        QiscusRtc.init(this, BuildConfig.AGORA_KEY);
     }
 }
