@@ -1,5 +1,10 @@
 apply plugin: 'com.android.application'
 
+
+Properties properties = new Properties()
+InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream()
+properties.load( inputStream )
+
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -14,6 +19,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        buildTypes.each {
+            it.buildConfigField("String", "AGORA_KEY", properties.getProperty('agora_key'))
         }
     }
 }

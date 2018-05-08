@@ -34,7 +34,6 @@ Properties properties = new Properties()
 InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream()
 properties.load( inputStream )
 
-
 artifactory {
     contextUrl = properties.getProperty('artifactory_url')
     publish {
