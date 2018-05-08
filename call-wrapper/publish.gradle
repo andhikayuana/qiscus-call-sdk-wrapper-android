@@ -36,7 +36,7 @@ properties.load( inputStream )
 
 
 artifactory {
-    contextUrl = 'https://artifactory.qiscus.com/artifactory'
+    contextUrl = properties.getProperty('artifactory_url')
     publish {
         repository {
             repoKey = properties.getProperty('artifactory_repokey')
