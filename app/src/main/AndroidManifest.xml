@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.qiscus.sdk.call.agora.sample">
+    package="com.qiscus.sdk.call.wrapper.sample">
 
     <application
         android:name=".SampleApp"
@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.qiscus.sdk.call.agora.sample.LoginActivity"
+            android:name="com.qiscus.sdk.call.wrapper.sample.LoginActivity"
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

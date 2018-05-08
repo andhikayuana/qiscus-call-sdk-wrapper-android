@@ -1,1 +1,1 @@
-include ':app', ':call-agora'
+include ':app', ':call-wrapper'

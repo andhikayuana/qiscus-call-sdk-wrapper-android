@@ -1,4 +1,4 @@
-# Qiscus Call SDK Agora
+# Qiscus Call SDK Wrapper
 
 Qiscus voice and video call SDK using agora engine.
 
@@ -21,7 +21,7 @@ allprojects {
 
 ```groovy
 dependencies {
-  implementation 'com.qiscus.sdk:call-agora:1.0.0'
+  implementation 'com.qiscus.sdk:call-wrapper:1.0.0'
 }
 ```
 
