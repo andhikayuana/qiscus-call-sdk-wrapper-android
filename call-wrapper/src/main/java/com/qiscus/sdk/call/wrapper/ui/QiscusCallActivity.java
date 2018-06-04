@@ -54,6 +54,14 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
     };
 
     private RtcEngine rtcEngine;
+    private Call callData;
+    private CallingFragment callingFragment;
+    private CallFragment callFragment;
+    private PowerManager.WakeLock wakeLock;
+    private RingManager ringManager;
+    private int field = 0x00000020;
+    private boolean callAccepted;
+    private boolean callConnected;
     private final IRtcEngineEventHandler rtcEventHandler = new IRtcEngineEventHandler() {
 
         @Override
@@ -99,17 +107,6 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
             });
         }
     };
-
-    private Call callData;
-
-    private CallingFragment callingFragment;
-    private CallFragment callFragment;
-    private PowerManager.WakeLock wakeLock;
-    private RingManager ringManager;
-    private int field = 0x00000020;
-
-    private boolean callAccepted;
-    private boolean callConnected;
 
     public static Intent generateIntent(Context context, Call callData) {
         Intent intent = new Intent(context, QiscusCallActivity.class);
@@ -238,7 +235,7 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
         SurfaceView surfaceView = RtcEngine.CreateRendererView(getBaseContext());
         surfaceView.setZOrderMediaOverlay(true);
         container.addView(surfaceView);
-        rtcEngine.setupLocalVideo(new VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_ADAPTIVE, 0));
+        rtcEngine.setupLocalVideo(new VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_FIT, 0));
     }
 
     private void joinChannel() {
