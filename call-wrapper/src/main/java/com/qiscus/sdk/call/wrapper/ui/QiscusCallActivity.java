@@ -7,6 +7,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
@@ -235,7 +236,19 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
         SurfaceView surfaceView = RtcEngine.CreateRendererView(getBaseContext());
         surfaceView.setZOrderMediaOverlay(true);
         container.addView(surfaceView);
-        rtcEngine.setupLocalVideo(new VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_FIT, 0));
+        rtcEngine.setupLocalVideo(new VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_ADAPTIVE, 0));
+
+        toggleLocalVideoOrientation(container, isLandscape());
+    }
+
+    private void toggleLocalVideoOrientation(FrameLayout container, boolean isLandscape) {
+        container.getLayoutParams().width = Math.round(DimUtil.convertDpToPixel(isLandscape ? 100 : 60, this));
+        container.getLayoutParams().height = Math.round(DimUtil.convertDpToPixel(isLandscape ? 60 : 100, this));
+        container.requestLayout();
+    }
+
+    private boolean isLandscape() {
+        return getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 
     private void joinChannel() {
