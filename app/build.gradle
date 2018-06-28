@@ -21,7 +21,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         buildTypes.each {
-            it.buildConfigField("String", "AGORA_KEY", properties.getProperty('agora_key'))
+            it.buildConfigField("String", "AGORA_KEY", "289345834675hgdfjkhgist58485")
         }
     }
 }
