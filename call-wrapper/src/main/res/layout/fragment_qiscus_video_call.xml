@@ -141,7 +141,8 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:padding="12dp"
-                    android:src="@drawable/ic_qiscus_video" />
+                    android:src="@drawable/ic_qiscus_video"
+                    android:visibility="gone"/>
 
                 <ImageView
                     android:id="@+id/button_switch_camera"

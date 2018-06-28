@@ -135,7 +135,8 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:focusable="true"
-                android:src="@drawable/ic_qiscus_video" />
+                android:src="@drawable/ic_qiscus_video"
+                android:visibility="gone"/>
 
             <ImageView
                 android:layout_width="48dp"
