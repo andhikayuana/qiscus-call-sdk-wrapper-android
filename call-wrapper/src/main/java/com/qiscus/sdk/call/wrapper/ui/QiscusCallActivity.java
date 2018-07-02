@@ -93,18 +93,22 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
         }
 
         @Override
-        public void onUserOffline(int uid, int reason) {
+        public void onUserOffline(final int uid, int reason) {
             Log.d(TAG, "onUserOffline: " + uid);
             String uids = QiscusRtc.getSession().getLastSuccessUid();
-            String[] split = uids.split(",");
+            final String[] split = uids.split(",");
 
-            if (split.length > 0 && split.length == 2) {
+            if (split.length > 0) {
 
-                int opponentUid = Integer.valueOf(split[0]) == uid ? Integer.valueOf(split[1]) :
-                        Integer.valueOf(split[0]);
-
-                setupRemoteVideo(opponentUid);
-                setupLocalVideo();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        int opponentUid = Integer.valueOf(split[0]) == uid ? Integer.valueOf(split[1]) :
+                                Integer.valueOf(split[0]);
+                        setupRemoteVideo(opponentUid);
+                        setupLocalVideo();
+                    }
+                });
 
                 return;
             }
@@ -313,7 +317,7 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
             container.removeAllViews();
         }
 
-        SurfaceView surfaceView = RtcEngine.CreateRendererView(getBaseContext());
+        SurfaceView surfaceView = RtcEngine.CreateRendererView(QiscusCallActivity.this);
         container.addView(surfaceView);
         rtcEngine.setupRemoteVideo(new VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_ADAPTIVE, uid));
 
