@@ -58,4 +58,8 @@ public class Session {
     public String getLastSuccessUid() {
         return sharedPreferences.getString("agora_uids", "");
     }
+
+    public void clearLastSessionUid() {
+        sharedPreferences.edit().putString("agora_uids", "").apply();
+    }
 }

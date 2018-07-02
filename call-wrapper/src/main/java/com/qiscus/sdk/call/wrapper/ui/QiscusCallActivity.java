@@ -82,6 +82,7 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
         @Override
         public void onFirstRemoteVideoDecoded(final int uid, int width, int height, int elapsed) {
             Log.d(TAG, "onFirstRemoteVideoDecoded: " + uid);
+            QiscusRtc.getSession().saveLastSuccessUid(uid);
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -94,6 +95,19 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
         @Override
         public void onUserOffline(int uid, int reason) {
             Log.d(TAG, "onUserOffline: " + uid);
+            String uids = QiscusRtc.getSession().getLastSuccessUid();
+            String[] split = uids.split(",");
+
+            if (split.length > 0 && split.length == 2) {
+
+                int opponentUid = Integer.valueOf(split[0]) == uid ? Integer.valueOf(split[1]) :
+                        Integer.valueOf(split[0]);
+
+                setupRemoteVideo(opponentUid);
+                setupLocalVideo();
+
+                return;
+            }
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -117,21 +131,12 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
         public void onJoinChannelSuccess(String channel, int uid, int elapsed) {
             super.onJoinChannelSuccess(channel, uid, elapsed);
             Log.d(TAG, "onJoinChannelSuccess: " + channel + " uid : " + uid);
-            QiscusRtc.getSession().saveLastSuccessUid(uid);
         }
 
         @Override
         public void onLeaveChannel(RtcStats stats) {
             super.onLeaveChannel(stats);
             Log.d(TAG, "onLeaveChannel: ");
-
-            String uids = QiscusRtc.getSession().getLastSuccessUid();
-            String[] split = uids.split(",");
-
-            if (split.length > 0 && split.length == 2) {
-                Log.d(TAG, "onLeaveChannel: " + uids);
-            }
-
         }
 
         @Override
@@ -167,6 +172,7 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        QiscusRtc.getSession().clearLastSessionUid();
         parseIntentData();
         if (callData != null) {
             initView();
