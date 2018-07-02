@@ -139,6 +139,18 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
             super.onRejoinChannelSuccess(channel, uid, elapsed);
             Log.d(TAG, "onRejoinChannelSuccess: " + uid);
         }
+
+        @Override
+        public void onStreamPublished(String url, int error) {
+            super.onStreamPublished(url, error);
+            Log.d(TAG, "onStreamPublished: " + url);
+        }
+
+        @Override
+        public void onStreamUnpublished(String url) {
+            super.onStreamUnpublished(url);
+            Log.d(TAG, "onStreamUnpublished: " + url);
+        }
     };
 
     public static Intent generateIntent(Context context, Call callData) {
