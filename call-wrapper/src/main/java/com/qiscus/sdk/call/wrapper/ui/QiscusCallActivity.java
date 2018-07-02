@@ -83,6 +83,16 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
         @Override
         public void onFirstRemoteVideoDecoded(final int uid, int width, int height, int elapsed) {
             Log.d(TAG, "onFirstRemoteVideoDecoded: " + uid);
+
+            //check from screen share
+            String uids = QiscusRtc.getSession().getLastSuccessUid();
+            if (!uids.equals("")) {
+                final String[] split = uids.split(",");
+                if (split.length == 2) {
+                    QiscusRtc.getSession().clearLastSessionUid();
+                }
+            }
+
             QiscusRtc.getSession().saveLastSuccessUid(uid);
             runOnUiThread(new Runnable() {
                 @Override
@@ -96,23 +106,26 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
         @Override
         public void onUserOffline(final int uid, int reason) {
             Log.d(TAG, "onUserOffline: " + uid);
+
+            //checking from screen share
             String uids = QiscusRtc.getSession().getLastSuccessUid();
-            final String[] split = uids.split(",");
+            if (!uids.equals("") && reason == USER_OFFLINE_QUIT) {
+                final String[] split = uids.split(",");
 
-            if (reason == USER_OFFLINE_QUIT &&  split.length > 0) {
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        int opponentUid = Integer.valueOf(split[0]) == uid ? Integer.valueOf(split[1]) :
-                                Integer.valueOf(split[0]);
-                        setupRemoteVideo(opponentUid);
-                        setupLocalVideo();
-                    }
-                });
-
-                return;
+                if (split.length >= 2) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            int opponentUid = Integer.valueOf(split[0]) == uid ? Integer.valueOf(split[1]) :
+                                    Integer.valueOf(split[0]);
+                            setupRemoteVideo(opponentUid);
+                            setupLocalVideo();
+                        }
+                    });
+                    return;
+                }
             }
+
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
