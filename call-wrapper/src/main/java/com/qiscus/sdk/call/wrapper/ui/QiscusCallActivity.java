@@ -37,6 +37,7 @@ import io.agora.rtc.video.VideoCanvas;
 
 import static com.qiscus.sdk.call.wrapper.data.config.Constants.CALL_DATA;
 import static com.qiscus.sdk.call.wrapper.data.config.Constants.ON_GOING_NOTIF_ID;
+import static io.agora.rtc.Constants.USER_OFFLINE_QUIT;
 
 /**
  * Created by fitra on 2/10/17.
@@ -98,7 +99,7 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
             String uids = QiscusRtc.getSession().getLastSuccessUid();
             final String[] split = uids.split(",");
 
-            if (split.length > 0) {
+            if (reason == USER_OFFLINE_QUIT &&  split.length > 0) {
 
                 runOnUiThread(new Runnable() {
                     @Override
