@@ -46,4 +46,16 @@ public class Session {
     public void logout() {
         sharedPreferences.edit().clear().apply();
     }
+
+    public void saveLastSuccessUid(int uid) {
+        StringBuilder uids = new StringBuilder()
+                .append(getLastSuccessUid())
+                .append(uid)
+                .append(",");
+        sharedPreferences.edit().putString("agora_uids", uids.toString()).apply();
+    }
+
+    public String getLastSuccessUid() {
+        return sharedPreferences.getString("agora_uids", "");
+    }
 }

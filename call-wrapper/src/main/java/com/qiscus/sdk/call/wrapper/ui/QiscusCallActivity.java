@@ -44,6 +44,7 @@ import static com.qiscus.sdk.call.wrapper.data.config.Constants.ON_GOING_NOTIF_I
 
 public class QiscusCallActivity extends BaseActivity implements CallingFragment.OnCallingListener, CallFragment.OnCallListener {
     private static final String LOG_TAG = QiscusCallActivity.class.getSimpleName();
+    private static final String TAG = QiscusCallActivity.class.getSimpleName();
 
     // Permission
     private String[] permissions = {
@@ -67,6 +68,7 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
 
         @Override
         public void onFirstRemoteAudioFrame(int uid, int elapsed) {
+            Log.d(TAG, "onFirstRemoteAudioFrame: " + uid);
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -79,6 +81,7 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
 
         @Override
         public void onFirstRemoteVideoDecoded(final int uid, int width, int height, int elapsed) {
+            Log.d(TAG, "onFirstRemoteVideoDecoded: " + uid);
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -90,6 +93,7 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
 
         @Override
         public void onUserOffline(int uid, int reason) {
+            Log.d(TAG, "onUserOffline: " + uid);
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -100,12 +104,40 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
 
         @Override
         public void onUserMuteVideo(final int uid, final boolean muted) {
+            Log.d(TAG, "onUserMuteVideo: ");
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     onRemoteUserVideoMuted(uid, muted);
                 }
             });
+        }
+
+        @Override
+        public void onJoinChannelSuccess(String channel, int uid, int elapsed) {
+            super.onJoinChannelSuccess(channel, uid, elapsed);
+            Log.d(TAG, "onJoinChannelSuccess: " + channel + " uid : " + uid);
+            QiscusRtc.getSession().saveLastSuccessUid(uid);
+        }
+
+        @Override
+        public void onLeaveChannel(RtcStats stats) {
+            super.onLeaveChannel(stats);
+            Log.d(TAG, "onLeaveChannel: ");
+
+            String uids = QiscusRtc.getSession().getLastSuccessUid();
+            String[] split = uids.split(",");
+
+            if (split.length > 0 && split.length == 2) {
+                Log.d(TAG, "onLeaveChannel: " + uids);
+            }
+
+        }
+
+        @Override
+        public void onRejoinChannelSuccess(String channel, int uid, int elapsed) {
+            super.onRejoinChannelSuccess(channel, uid, elapsed);
+            Log.d(TAG, "onRejoinChannelSuccess: " + uid);
         }
     };
 
@@ -141,6 +173,7 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
         }
 
         ringManager = RingManager.getInstance(this);
+
     }
 
     private void parseIntentData() {
@@ -252,6 +285,7 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
     }
 
     private void joinChannel() {
+        Log.d(TAG, "joinChannel: ");
         rtcEngine.joinChannel(null, callData.getRoomId(), "", 0);
     }
 
@@ -468,6 +502,7 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
     }
 
     private void disconnect() {
+        Log.d(TAG, "disconnect: ");
         onRemoteUserLeft();
         NotificationManagerCompat.from(this).cancel(ON_GOING_NOTIF_ID);
         releaseProximity();

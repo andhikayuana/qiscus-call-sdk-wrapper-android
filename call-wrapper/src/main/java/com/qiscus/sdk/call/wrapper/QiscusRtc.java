@@ -57,6 +57,11 @@ public final class QiscusRtc {
         session.register(account);
     }
 
+    public static Session getSession() {
+        if (session == null) throw new IllegalStateException("please init first!");
+        return session;
+    }
+
     public static boolean isRegistered() {
         return session.isRegistered();
     }
@@ -70,6 +75,16 @@ public final class QiscusRtc {
 
     public static void logout() {
         session.logout();
+    }
+
+    /**
+     * Use this method to start an Activity for call with other user.
+     *
+     * @param roomCallId generated manually of roomCallId from main app.
+     * @return Call Activity builder
+     */
+    public static RequiredRoomId buildCallWith(String roomCallId) {
+        return new CallActivityBuilder(roomCallId);
     }
 
     /**
@@ -98,16 +113,6 @@ public final class QiscusRtc {
         END,
         PN_RECEIVED,
         INCOMING
-    }
-
-    /**
-     * Use this method to start an Activity for call with other user.
-     *
-     * @param roomCallId generated manually of roomCallId from main app.
-     * @return Call Activity builder
-     */
-    public static RequiredRoomId buildCallWith(String roomCallId) {
-        return new CallActivityBuilder(roomCallId);
     }
 
     public interface RequiredRoomId {
