@@ -24,6 +24,7 @@ public class CallConfig {
     private int backgroundColor;
     private int backgroundImage;
     private boolean isOngoingNotificationEnable = true;
+    private boolean disableVideoToggleButton = false;
     private int onGoingSmallIcon = R.drawable.ic_qiscus_accept_voice_call;
     private int onGoingLargeIcon = R.drawable.ic_qiscus_accept_voice_call;
     private int endCallButton = R.drawable.bt_qiscus_end_call;
@@ -630,6 +631,19 @@ public class CallConfig {
     @Nullable
     public CallPanelListener.OnCameraClickListener getOnCameraClickListener() {
         return onCameraClickListener;
+    }
+
+    /**
+     * disable video button
+     * @param disabled
+     */
+    public CallConfig setDisableVideoToggleButton(boolean disabled) {
+        disableVideoToggleButton = disabled;
+        return this;
+    }
+
+    public boolean isDisableVideoToggleButton() {
+        return disableVideoToggleButton;
     }
 
     /**

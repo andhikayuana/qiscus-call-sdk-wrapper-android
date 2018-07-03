@@ -27,7 +27,7 @@ public class VideoCallFragment extends CallFragment {
     private void initView(View view) {
         btnSwitchCamera = view.findViewById(R.id.button_switch_camera);
         btnVideo = view.findViewById(R.id.button_video);
-        btnVideo.setVisibility(View.GONE);
+        btnVideo.setVisibility(QiscusRtc.getCallConfig().isDisableVideoToggleButton() ? View.GONE : View.VISIBLE);
 
         final int cameraFrontIcon = QiscusRtc.getCallConfig().getFrontCameraIcon();
         final int cameraRearIcon = QiscusRtc.getCallConfig().getRearCameraIcon();
