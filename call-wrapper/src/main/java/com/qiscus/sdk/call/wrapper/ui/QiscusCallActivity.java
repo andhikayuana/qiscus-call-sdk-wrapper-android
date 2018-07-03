@@ -37,7 +37,6 @@ import io.agora.rtc.video.VideoCanvas;
 
 import static com.qiscus.sdk.call.wrapper.data.config.Constants.CALL_DATA;
 import static com.qiscus.sdk.call.wrapper.data.config.Constants.ON_GOING_NOTIF_ID;
-import static io.agora.rtc.Constants.USER_OFFLINE_QUIT;
 
 /**
  * Created by fitra on 2/10/17.
@@ -83,16 +82,6 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
         @Override
         public void onFirstRemoteVideoDecoded(final int uid, int width, int height, int elapsed) {
             Log.d(TAG, "onFirstRemoteVideoDecoded: " + uid);
-
-            //check from screen share
-            String uids = QiscusRtc.getSession().getLastSuccessUid();
-            if (!uids.equals("")) {
-                final String[] split = uids.split(",");
-                if (split.length == 2) {
-                    QiscusRtc.getSession().clearLastSessionUid();
-                }
-            }
-
             QiscusRtc.getSession().saveLastSuccessUid(uid);
             runOnUiThread(new Runnable() {
                 @Override
@@ -107,31 +96,29 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
         public void onUserOffline(final int uid, int reason) {
             Log.d(TAG, "onUserOffline: " + uid);
 
-            //checking from screen share
+            //check from screen share
             String uids = QiscusRtc.getSession().getLastSuccessUid();
-            if (!uids.equals("") && reason == USER_OFFLINE_QUIT) {
-                final String[] split = uids.split(",");
+            String[] split = uids.split(",");
 
-                if (split.length >= 2) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            int opponentUid = Integer.valueOf(split[0]) == uid ? Integer.valueOf(split[1]) :
-                                    Integer.valueOf(split[0]);
-                            setupRemoteVideo(opponentUid);
-                            setupLocalVideo();
-                        }
-                    });
-                    return;
-                }
+            if (split.length == 1) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        disconnect();
+                    }
+                });
+            } else if (split.length == 2) {
+                final int videoUid = Integer.valueOf(split[0]);
+                QiscusRtc.getSession().clearLastSessionUid();
+                QiscusRtc.getSession().saveLastSuccessUid(videoUid);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        setupRemoteVideo(videoUid);
+                        setupLocalVideo();
+                    }
+                });
             }
-
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    disconnect();
-                }
-            });
         }
 
         @Override
@@ -174,6 +161,7 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
             super.onStreamUnpublished(url);
             Log.d(TAG, "onStreamUnpublished: " + url);
         }
+
     };
 
     public static Intent generateIntent(Context context, Call callData) {
@@ -605,6 +593,7 @@ public class QiscusCallActivity extends BaseActivity implements CallingFragment.
         Thread.setDefaultUncaughtExceptionHandler(null);
         NotificationManagerCompat.from(this).cancel(ON_GOING_NOTIF_ID);
         disconnect();
+        QiscusRtc.getSession().clearLastSessionUid();
         super.onDestroy();
     }
 }
